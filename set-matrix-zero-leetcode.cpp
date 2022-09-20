@@ -8,7 +8,7 @@ public:
                 
                 if(matrix[i][j]==0)
                 {
-                   r.push_back(i);
+                   r.push_back(i); 
                     c.push_back(j);
                 }
                 
