@@ -20,9 +20,9 @@ public:
               for(int j=i;j<S.length();j++)
               {
                   if(k == W.length()) break;
-                  if(k<W.length() and S[j] == W[k] and m[j] == 0) {
+                  if(k<W.length() and S[j] == W[k]) {
                       k++;
-                      m[j] = 1;
+                      S[j] = 'A' ;
                   }
                   
               }
