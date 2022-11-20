@@ -11,24 +11,38 @@
  */
 class Solution {
 public:
+    unordered_map<TreeNode*,int>m;
     int res=0;
     int height(TreeNode*root)
     {
         if(root==NULL) return 0;
-        else return 1+max(height(root->left),height(root->right));
+        else {
+        
+             return m[root]=   1+max(height(root->left),height(root->right));
+          
+            
+        }
+       
     }
     void traversal(TreeNode*root)
     {
+        
         if(root!=NULL)
         {
-              res=max((height(root->left)+height(root->right)),res);
+              // res=max((height(root->left)+height(root->right)),res);
+            res=max(res,(m[root->left]+m[root->right]));
               traversal(root->left);
               traversal(root->right);
         }
     }
     int diameterOfBinaryTree(TreeNode* root) {
-       
+        int x = height(root);
         traversal(root);
+        for(pair<TreeNode*,int>p:m) {
+            if(p.first!=NULL){
+            cout<<p.first->val<<" "<<p.second<<" ";
+        }
+        }
         return res;
     }
 };
