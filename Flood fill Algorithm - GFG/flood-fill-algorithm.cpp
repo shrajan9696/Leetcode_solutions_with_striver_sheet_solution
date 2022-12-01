@@ -6,41 +6,36 @@ using namespace std;
 class Solution {
 public:
 
-    void BFS(vector<vector<int>>&image,int r,int c, int color,vector<vector<bool>>&visited)
+    void DFS(vector<vector<int>>&image,int row,int column, int color,vector<vector<bool>>&visited,int scol)
     {
-        int n = image.size();
-        int m = image[0].size();
-        queue<pair<int,int>> q;
-        q.push({r,c});
-        visited[r][c] = true;
-        while(!q.empty()){
-            auto u = q.front();
-            q.pop();
-            int row = u.first;
-            int column = u.second;
-            int x = image[row][column];
+      
+        visited[row][column] = true;
+       
+          int n = image.size();
+          int m = image[0].size();
+            // int x = image[row][column];
             image[row][column] = color;
-            if(row-1>=0 and image[row-1][column] == x and visited[row-1][column] == false)
+            if(row-1>=0 and image[row-1][column] == scol and visited[row-1][column] == false)
             {
                 visited[row-1][column] = true;
-                q.push({row-1,column});
+                DFS(image,row-1,column,color,visited,scol);
             }
-            if(row+1<n and image[row+1][column] == x and visited[row+1][column] == false)
+            if(row+1<n and image[row+1][column] == scol and visited[row+1][column] == false)
             {
                 visited[row+1][column] = true;
-                q.push({row+1,column});
+                  DFS(image,row+1,column,color,visited,scol);
             }
-            if(column-1>=0 and image[row][column-1] == x and visited[row][column-1] == false)
+            if(column-1>=0 and image[row][column-1] == scol and visited[row][column-1] == false)
             {
                 visited[row][column-1] = true;
-                q.push({row,column-1});
+                DFS(image,row,column-1,color,visited,scol);
             }
-            if(column+1<m and image[row][column+1] == x and visited[row][column+1] == false)
+            if(column+1<m and image[row][column+1] == scol and visited[row][column+1] == false)
             {
                 visited[row][column+1] = true;
-                q.push({row,column+1});
+                 DFS(image,row,column+1,color,visited,scol);
             }
-        }
+        
         
     }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
@@ -54,7 +49,8 @@ public:
                 visited[i][j] = false;
             }
         }
-        BFS(image,sr,sc,newColor,visited);
+        int scol = image[sr][sc];
+        DFS(image,sr,sc,newColor,visited,scol);
         return image;
     }
 };
