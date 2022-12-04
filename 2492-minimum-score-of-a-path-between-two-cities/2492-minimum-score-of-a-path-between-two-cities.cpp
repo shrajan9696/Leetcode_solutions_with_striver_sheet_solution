@@ -1,42 +1,48 @@
 class Solution {
 public:
-      void dfs(int src,vector<pair<int,int>> g[],int &mn,vector<int> &vis){
-        
-        vis[src]=1;
-        
-        for(auto i:g[src]){
-            
-            int child=i.first;
-            int wt=i.second;
-            
-            mn=min(mn,wt);
-            
-            if(!vis[child]){
-                dfs(child,g,mn,vis);
+    int ans=INT_MAX;
+   
+        void DFS(vector<vector<pair<int,int>>>&v,int s,vector<bool>&visited)
+        {
+            if(visited[s]==true) return;
+            visited[s] = true;
+           
+            for(auto x:v[s])
+            {
+                 ans = min(ans,x.second);
+                if(visited[x.first] == false){
+                    // visited[x.first] = true;
+                    
+                    DFS(v,x.first,visited);
+                }
             }
         }
-        
-    }
-    int minScore(int n, vector<vector<int>>& roads) {
-     vector<pair<int,int>> g[n+1];
-        
-        for(auto i:roads){
-            
-            int u=i[0];
-            int v=i[1];
-            int wt=i[2];
-            
-            g[u].push_back({v,wt});
-            g[v].push_back({u,wt});
-        }
-        vector<int> vis(n+1,0);
-        
-        int mn=1e6;
-        
-        dfs(1,g,mn,vis);
-        
-        return mn;
-        
     
+    int minScore(int n, vector<vector<int>>& roads) 
+    {
+        
+       
+        vector<vector<pair<int,int>>> v(n+1);
+        for(int i=0;i<roads.size();i++)
+        {
+            v[roads[i][0]].push_back({roads[i][1],roads[i][2]});
+              v[roads[i][1]].push_back({roads[i][0],roads[i][2]});
+        }
+        // for(auto x:v){
+        //     for(auto y:x){
+        //         cout<<y.first<<" "<<y.second<<" ";
+        //     }
+        //     cout<<"\n";
+        // }
+       
+       
+       vector<bool> visited(n+1,false);
+//       for(int i=0;i<n+1;i++){
+//           visited[i] = false;
+//       }
+        
+        int source=1;
+        DFS(v,source,visited);
+        return ans;
     }
 };
