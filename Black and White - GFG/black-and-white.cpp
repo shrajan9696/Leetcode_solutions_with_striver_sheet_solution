@@ -42,14 +42,14 @@ long long numOfWays(int N, int M)
                 int row = i+k;
                 int col1 = j;
                 int col2 = j;
-                if(k==2 or k==-2) 
+                if(abs(k) == 2) 
                 {
                 //   col1 = col1-1;
                 //   col2 = col2+1;
                 col1--;
                 col2++;
                 }
-                 else if(k==1 or k==-1) 
+                 else if(abs(k) == 1) 
                  {
                     col1 = col1-2;
                     col2 = col2+2;
