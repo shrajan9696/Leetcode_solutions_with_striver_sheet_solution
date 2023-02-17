@@ -12,19 +12,20 @@
 class Solution {
 public:
    int ans= INT_MAX;
-    vector<int> v;
+    TreeNode* prev = NULL;
     void Traverse(TreeNode* root){
         if(root!=NULL) {
             Traverse(root->left);
-            v.push_back(root->val);
+            // v.push_back(root->val);
+            if(prev!=NULL) {
+                ans = min(ans,root->val - prev->val);
+            }
+            prev = root;
             Traverse(root->right);
         }
     }
     int minDiffInBST(TreeNode* root) {
        Traverse(root);
-        for(int i=1;i<v.size();i++){
-            ans = min(ans,v[i]-v[i-1]);
-        }
         return ans;
     }
 };
