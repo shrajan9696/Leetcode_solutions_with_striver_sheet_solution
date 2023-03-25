@@ -11,7 +11,7 @@ public:
     ListNode *detectCycle(ListNode *head) {
         ListNode*curr=head;
         set<ListNode*> s;
-        while(curr!=NULL and curr->next!=NULL){
+        while(curr!=NULL){
             if(s.find(curr)!=s.end()){
                 return curr;
             }
