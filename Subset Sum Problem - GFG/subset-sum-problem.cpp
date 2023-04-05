@@ -11,33 +11,28 @@ class Solution{
 public:
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
-        int k = sum;
-        int target = sum;
         int n = arr.size();
-         vector<vector<bool>> dp(n,vector<bool>(k+1,false));
-    
-    for(int i=0; i<n; i++){
-        dp[i][0] = true;
-    }
-    
-    if(arr[0]<=k)
-        dp[0][arr[0]] = true;
-    
-    for(int ind = 1; ind<n; ind++){
-        for(int target= 1; target<=k; target++){
-            
-            bool notTaken = dp[ind-1][target];
-    
-            bool taken = false;
-                if(arr[ind]<=target)
-                    taken = dp[ind-1][target-arr[ind]];
         
-            dp[ind][target]= notTaken||taken;
-        }
-    }
-    
-    return dp[n-1][k];
-
+       vector<vector<bool>> dp(n+1,vector<bool>(sum+1,false));
+       for(int i=0;i<n+1;i++){
+          dp[i][0] = true; 
+       }
+       for(int i=1;i<=n;i++){
+           for(int j=0;j<=sum;j++){
+               bool take = false;
+               bool not_take = false;
+               if(j<arr[i-1]){
+                   not_take = dp[i-1][j];
+               } 
+               else{
+                   take = dp[i-1][j-arr[i-1]];
+                   not_take = dp[i-1][j];
+               }
+               dp[i][j] = take or not_take;
+           }
+       }
+       return dp[n][sum];
+       
 
     }
 };
