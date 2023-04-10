@@ -15,32 +15,31 @@ class Solution
        vector<int> dist(V,INT_MAX);
        vector<bool> finalised(V,false);
        dist[S]=0;
-       for(int i=0;i<V-1;i++){
-           // finding first unfinalized vertex;
-            int u=-1;
-           for(int j=0;j<V;j++){
-              
-               if(finalised[j] == false){
-                u = j;
-                break;
-               }
-           }
-           
-           // finding minimum unfinalized vertex;
-           for(int j=0;j<V;j++){
-                if(finalised[j] == false and dist[j]<dist[u]){
-                   u =j;
-               }
-           }
-           finalised[u] = true;
-           vector<vector<int>> v = adj[u];
-           for(int j=0;j<v.size();j++){
-               if(finalised[v[j][0]] == false){
-                   dist[v[j][0]] = min(dist[v[j][0]],(dist[u]+v[j][1]));
-               }
-           }
-           
-       }
+    //   priority_queue<pair<int,int>> pq;
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>> >pq;
+      pq.push({0,S});
+      while(!pq.empty()){
+          auto p = pq.top();
+          pq.pop();
+          int v = p.second;
+          int weight  = p.first;
+          finalised[v] = true;
+          vector<vector<int>> graph = adj[v];
+          
+          for(int i=0;i<graph.size();i++)
+          {
+              if(finalised[graph[i][0]] == false){
+                //   dist[graph[i][0]] = min(dist[graph[i][0]], weight+graph[i][1]);
+                if(dist[graph[i][0]] > weight+graph[i][1]){
+                        dist[graph[i][0]] = weight+graph[i][1];
+                  pq.push({dist[graph[i][0]],graph[i][0]});
+                }
+              }
+          }
+      }
+    
+      
+    
        return dist;
     }  
         
