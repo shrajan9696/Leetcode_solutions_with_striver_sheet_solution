@@ -16,8 +16,8 @@ public:
             int v = u.second;
             pq.pop();
             for(auto x:adj[v]){
-                if(dis[x.first]>(weight+x.second)){
-                    dis[x.first] = weight+x.second;
+                if(dis[x.first]>(dis[v]+x.second)){
+                    dis[x.first] = dis[v]+x.second;
                      pq.push({dis[x.first],x.first});   
                 }
             }
